@@ -118,4 +118,4 @@ class ToggleCarAssignmentView(LoginRequiredMixin, generic.View):
         else:
             car.drivers.remove(user)
 
-        return redirect(reverse("taxi:car-detail", kwargs={"pk:": car.pk}))
+        return redirect(reverse("taxi:car-detail", kwargs={"pk": car.id}))
