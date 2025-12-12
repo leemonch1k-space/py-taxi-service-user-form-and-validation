@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -6,13 +7,13 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from taxi.forms import DriverCreateForm, DriverLicenseUpdateForm, CarCreateForm
-from taxi.models import Driver, Car, Manufacturer
+from taxi.models import Car, Manufacturer
 
 
 @login_required
 def index(request):
 
-    num_drivers = Driver.objects.count()
+    num_drivers = get_user_model().objects.count()
     num_cars = Car.objects.count()
     num_manufacturers = Manufacturer.objects.count()
 
@@ -81,30 +82,30 @@ class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 class DriverListView(LoginRequiredMixin, generic.ListView):
-    model = Driver
+    model = get_user_model()
     paginate_by = 5
 
 
 class DriverDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Driver
-    queryset = Driver.objects.all().prefetch_related("cars__manufacturer")
+    model = get_user_model()
+    queryset = model.objects.all().prefetch_related("cars__manufacturer")
 
 
 class DriverCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Driver
-    queryset = Driver.objects.all().prefetch_related("cars__manufacturer")
+    model = get_user_model()
+    queryset = model.objects.all().prefetch_related("cars__manufacturer")
     form_class = DriverCreateForm
 
 
 class DriverUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Driver
-    queryset = Driver.objects.all().prefetch_related("cars__manufacturer")
+    model = get_user_model()
+    queryset = model.objects.all().prefetch_related("cars__manufacturer")
     form_class = DriverLicenseUpdateForm
 
 
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Driver
-    queryset = Driver.objects.all().prefetch_related("cars__manufacturer")
+    model = get_user_model()
+    queryset = model.objects.all().prefetch_related("cars__manufacturer")
     success_url = reverse_lazy("taxi:driver-list")
 
 
