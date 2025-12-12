@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Delete car?</h1>
+  <h1>Delete Driver?</h1>
   <div class="d-flex flex-row bd-highlight mb-3">
     <div class="p-2 bd-highlight">
       <form action="" method="post">
@@ -11,7 +11,7 @@
       </form>
     </div>
     <div class="p-2 bd-highlight">
-      <a class="btn btn-primary" href="{% url 'taxi:car-detail' car.id %}">Cancel</a>
+      <a class="btn btn-primary" href="{% url 'taxi:driver-detail' driver.id %}">Cancel</a>
     </div>
   </div>
 {% endblock %}
